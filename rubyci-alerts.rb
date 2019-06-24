@@ -89,5 +89,5 @@ begin
 
   File.binwrite(TIMESTAMPS_DAT, Marshal.dump(timestamps))
 ensure
-  notify_slack("failed: #{ escape($!.message) }")
+  notify_slack("failed: #{ escape($!.message) }") if $!
 end
