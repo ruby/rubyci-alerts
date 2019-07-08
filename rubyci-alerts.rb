@@ -27,41 +27,53 @@ def notify_slack(msg)
   )
 end
 
+def fetch_json(url)
+  count = 0
+  begin
+    open(url) do |f|
+      JSON.parse(f.read)
+    end
+  rescue Exception
+    count += 1
+    if count < 3
+      sleep 3
+      retry
+    end
+    raise
+  end
+end
+
 def get_servers
   servers = {}
-  open(RUBYCI_SERVERS_URL) do |f|
-    JSON.parse(f.read).each do |server|
-      servers[server["id"]] = server
-    end
+  fetch_json(RUBYCI_SERVERS_URL).each do |server|
+    servers[server["id"]] = server
   end
   servers
 end
 
 def get_failure_reports(servers)
   failure_reports = []
-  open(RUBYCI_REPORTS_URL) do |f|
-    JSON.parse(f.read).each do |report|
-      next if report["branch"] != "master"
+  fetch_json(RUBYCI_REPORTS_URL).each do |report|
+    next if report["branch"] != "master"
 
-      server_id = report["server_id"]
-      server = servers[server_id]
-      name = server["name"]
-      uri = URI.parse(server["uri"])
-      ordinal = server["ordinal"]
-      datetime = Time.iso8601(report["datetime"])
-      summary = report["summary"]
-      shortsummary = shortsummary(summary)
-      commit = summary[/^(\h{10,}) /, 1]
-      raw = report["ltsv"].split("\t").map {|s| s.split(":", 2) }.to_h
-      fail_path = raw["compressed_failhtml_relpath"]
-      fail_uri = "https://rubyci.org/logs/#{ uri.host + uri.path }"
-      fail_uri = File.join(fail_uri, "ruby-master", fail_path)
+    server_id = report["server_id"]
+    server = servers[server_id]
+    name = server["name"]
+    uri = URI.parse(server["uri"])
+    ordinal = server["ordinal"]
+    datetime = Time.iso8601(report["datetime"])
+    summary = report["summary"]
+    shortsummary = shortsummary(summary)
+    commit = summary[/^(\h{10,}) /, 1]
+    raw = report["ltsv"].split("\t").map {|s| s.split(":", 2) }.to_h
+    fail_path = raw["compressed_failhtml_relpath"]
+    fail_uri = "https://rubyci.org/logs/#{ uri.host + uri.path }"
+    fail_uri = File.join(fail_uri, "ruby-master", fail_path)
 
-      unless shortsummary.include?("success")
-        commit = " (<https://github.com/ruby/ruby/commit/#{ commit }|#{ commit }>)" if commit
-        msg = "#{ name }#{ commit }: <#{ fail_uri }|#{ escape(shortsummary) }>"
-        failure_reports << [[ordinal, datetime, server_id], msg]
-      end
+    unless shortsummary.include?("success")
+      commit = " (<https://github.com/ruby/ruby/commit/#{ commit }|#{ commit }>)" if commit
+      msg = "#{ name }#{ commit }: <#{ fail_uri }|#{ escape(shortsummary) }>"
+      failure_reports << [[ordinal, datetime, server_id], msg]
     end
   end
   failure_reports.sort_by {|key, _msg| key }
