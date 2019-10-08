@@ -13,8 +13,12 @@ jobs:
 
       - uses: actions/setup-ruby@v1
 
-      - name: Setup bundle
-        run: bundle install
+      - name: Setup the environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install chromium-driver
+          bundle update --bundler
+          bundle install
 
       - name: Run the script
         run: bundle exec ruby rubyci-screenshot.rb
