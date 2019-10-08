@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  schedule:
+    - cron: '30 14 * * *' # Daily at 14:30 UTC
+
 
 jobs:
   latest:
@@ -26,7 +29,7 @@ jobs:
           RUBYCI_SCREENSHOT_SLACK_API_TOKEN: ${{ secrets.RUBYCI_SCREENSHOT_SLACK_API_TOKEN }}
           RUBYCI_SCREENSHOT_SLACK_CHANNEL_ID: ${{ secrets.RUBYCI_SCREENSHOT_SLACK_CHANNEL_ID }}
 
-      - uses: actions/upload-artifact@master
-        with:
-          name: rubyci-screenshot
-          path: rubyci.png
+#      - uses: actions/upload-artifact@master
+#        with:
+#          name: rubyci-screenshot
+#          path: rubyci.png
