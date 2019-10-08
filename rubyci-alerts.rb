@@ -8,7 +8,7 @@ require "time"
 SLACK_WEBHOOK_URL = ENV["SLACK_WEBHOOK_URL"]
 RUBYCI_SERVERS_URL = "https://rubyci.org/servers.json"
 RUBYCI_REPORTS_URL = "https://rubyci.org/reports.json"
-TIMESTAMPS_DAT = File.join(__dir__, "timestamps.dat")
+TIMESTAMPS_JSON = File.join(__dir__, "timestamps.json")
 
 def shortsummary(summary)
   summary[/^[^\x28]+(?:\s*\([^\x29]*\)|\s*\[[^\x5D]*\])*\s*(\S.*?) \(/, 1]
@@ -20,11 +20,15 @@ end
 
 def notify_slack(msg)
   params = { text: msg }
-  Net::HTTP.post(
-    URI.parse(SLACK_WEBHOOK_URL),
-    JSON.generate(params),
-    "Content-Type" => "application/json"
-  )
+  if SLACK_WEBHOOK_URL
+    Net::HTTP.post(
+      URI.parse(SLACK_WEBHOOK_URL),
+      JSON.generate(params),
+      "Content-Type" => "application/json"
+    )
+  else
+    pp params
+  end
 end
 
 def fetch_json(url)
@@ -61,7 +65,7 @@ def get_failure_reports(servers)
     name = server["name"]
     uri = URI.parse(server["uri"])
     ordinal = server["ordinal"]
-    datetime = Time.iso8601(report["datetime"])
+    datetime = Time.iso8601(report["datetime"]).to_i
     summary = report["summary"]
     shortsummary = shortsummary(summary)
     commit = summary[/^(\h{10,}) /, 1]
@@ -90,7 +94,7 @@ end
 
 begin
   timestamps = {}
-  timestamps = Marshal.load(File.binread(TIMESTAMPS_DAT)) if File.readable?(TIMESTAMPS_DAT)
+  timestamps = JSON.parse(File.read(TIMESTAMPS_JSON))
 
   servers = get_servers
   failure_reports = get_failure_reports(servers)
@@ -99,7 +103,7 @@ begin
     notify_slack(msg)
   end
 
-  File.binwrite(TIMESTAMPS_DAT, Marshal.dump(timestamps))
+  File.write(TIMESTAMPS_JSON, JSON.pretty_generate(timestamps))
 ensure
   notify_slack("failed: #{ escape($!.message) }") if $!
 end
