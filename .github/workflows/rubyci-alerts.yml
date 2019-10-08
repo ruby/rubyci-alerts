@@ -17,7 +17,7 @@ jobs:
       - name: Run the script
         run: ruby rubyci-alerts.rb
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          RUBYCI_ALERTS_SLACK_WEBHOOK_URL: ${{ secrets.RUBYCI_ALERTS_SLACK_WEBHOOK_URL }}
 
       - name: Update the timestamp file
         run: |

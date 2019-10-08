@@ -5,7 +5,7 @@ require "uri"
 require "json"
 require "time"
 
-SLACK_WEBHOOK_URL = ENV["SLACK_WEBHOOK_URL"]
+SLACK_WEBHOOK_URL = ENV["RUBYCI_ALERTS_SLACK_WEBHOOK_URL"]
 RUBYCI_SERVERS_URL = "https://rubyci.org/servers.json"
 RUBYCI_REPORTS_URL = "https://rubyci.org/reports.json"
 TIMESTAMPS_JSON = File.join(__dir__, "timestamps.json")
