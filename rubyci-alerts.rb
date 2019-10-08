@@ -77,7 +77,7 @@ def get_failure_reports(servers)
     unless shortsummary.include?("success")
       commit = " (<https://github.com/ruby/ruby/commit/#{ commit }|#{ commit }>)" if commit
       msg = "#{ name }#{ commit }: <#{ fail_uri }|#{ escape(shortsummary) }>"
-      failure_reports << [[ordinal, datetime, server_id], msg]
+      failure_reports << [[ordinal, datetime, server_id.to_s], msg]
     end
   end
   failure_reports.sort_by {|key, _msg| key }
