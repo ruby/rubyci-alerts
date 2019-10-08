@@ -1,7 +1,7 @@
 name: rubyci-alerts
 on:
   schedule:
-    - cron: '* * * * *' # every minute (tentative)
+    - cron: '0,10,20,30,40,50 * * * *' # every ten minutes
 
 jobs:
   latest:
