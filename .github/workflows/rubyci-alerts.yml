@@ -1,4 +1,4 @@
-name: coverity-scan
+name: rubyci-alerts
 on:
   schedule:
     - cron: '* * * * *' # every minute (tentative)
