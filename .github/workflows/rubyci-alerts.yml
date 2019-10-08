@@ -16,6 +16,8 @@ jobs:
 
       - name: Run the script
         run: ruby rubyci-alerts.rb
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Update the timestamp file
         run: |
@@ -25,5 +27,4 @@ jobs:
           git commit -a -m 'Update timestamp'
           git push origin HEAD
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
