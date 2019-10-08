@@ -19,8 +19,8 @@ jobs:
 
       - name: Update the timestamp file
         run: |
-          git config --global user.name "Yusuke Endoh"
-          git config --global user.name "mame@ruby-lang.org"
+          git config --global user.name "git"
+          git config --global user.email "svn-admin@ruby-lang.org"
           git remote set-url origin https://mame:${GITHUB_TOKEN}@github.com/ruby/rubyci-alerts.git
           git commit -a -m 'Update timestamp'
           git push origin HEAD
