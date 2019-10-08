@@ -17,7 +17,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install chromium-driver
-          bundle update --bundler
+          gem install bundler
           bundle install
 
       - name: Run the script
