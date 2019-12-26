@@ -10,8 +10,8 @@ FILES_UPLOAD_URI = "https://slack.com/api/files.upload"
 
 Dir.chdir(__dir__)
 
-system("/usr/bin/chromedriver", "-v")
-Selenium::WebDriver::Chrome::Service.driver_path = "/usr/bin/chromedriver"
+system("/snap/bin/chromium.chromedriver", "-v")
+Selenium::WebDriver::Chrome::Service.driver_path = "/snap/bin/chromium.chromedriver"
 
 options = Selenium::WebDriver::Chrome::Options.new
 options.add_argument("--headless")
