@@ -19,7 +19,7 @@ jobs:
       - name: Setup the environment
         run: |
           sudo apt-get update
-          sudo apt-get install chromium-driver
+          sudo apt-get install chromium-chromedriver
           gem install bundler
           bundle install
 
