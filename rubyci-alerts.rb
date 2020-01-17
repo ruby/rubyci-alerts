@@ -6,8 +6,8 @@ require "json"
 require "time"
 
 SLACK_WEBHOOK_URL = ENV["RUBYCI_ALERTS_SLACK_WEBHOOK_URL"]
-RUBYCI_SERVERS_URL = "https://www.rubyci.org/servers.json"
-RUBYCI_REPORTS_URL = "https://www.rubyci.org/reports.json"
+RUBYCI_SERVERS_URL = "https://rubyci.org/servers.json"
+RUBYCI_REPORTS_URL = "https://rubyci.org/reports.json"
 TIMESTAMPS_JSON = File.join(__dir__, "timestamps.json")
 
 def shortsummary(summary)

@@ -18,7 +18,7 @@ options.add_argument("--headless")
 options.add_argument("--window-size=1280,3000")
 driver = Selenium::WebDriver.for(:chrome, options: options)
 
-driver.navigate.to("https://www.rubyci.org")
+driver.navigate.to("https://rubyci.org")
 driver.execute_script(<<END)
 let IGNORED_SERVERS = [
 // "Debian 10.0(testing) x86_64",
