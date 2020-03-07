@@ -8,6 +8,7 @@ require "time"
 SLACK_WEBHOOK_URL = ENV["RUBYCI_ALERTS_SLACK_WEBHOOK_URL"]
 RUBYCI_SERVERS_URL = "https://rubyci.org/servers.json"
 RUBYCI_REPORTS_URL = "https://rubyci.org/reports.json"
+SIMPLER_ALERTS_URL = ENV["SIMPLER_ALERTS_SIMPLER_ALERTS_URL"]
 TIMESTAMPS_JSON = File.join(__dir__, "timestamps.json")
 
 FailureReport = Struct.new(
@@ -36,6 +37,25 @@ def notify_slack(msg)
   if SLACK_WEBHOOK_URL
     Net::HTTP.post(
       URI.parse(SLACK_WEBHOOK_URL),
+      JSON.generate(params),
+      "Content-Type" => "application/json"
+    )
+  else
+    pp params
+  end
+end
+
+def notify_simpler_alerts(report)
+  params = {
+    ci: "rubyci-alerts",
+    env: report.name,
+    url: report.fail_uri,
+    commit: report.commit,
+    message: report.shortsummary,
+  }
+  if SIMPLER_ALERTS_URL
+    Net::HTTP.post(
+      URI.parse(SIMPLER_ALERTS_URL),
       JSON.generate(params),
       "Content-Type" => "application/json"
     )
@@ -118,6 +138,7 @@ begin
   filter_failure_reports(failure_reports, timestamps)
   failure_reports.each do |_key, report|
     notify_slack(report.msg)
+    notify_simpler_alerts(report)
   end
 
   File.write(TIMESTAMPS_JSON, JSON.pretty_generate(timestamps))
