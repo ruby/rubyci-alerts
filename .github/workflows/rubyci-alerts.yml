@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@master
 
       - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '>= 2.5'
 
       - name: Use master branch
         run: git checkout master
@@ -19,6 +21,7 @@ jobs:
         run: ruby rubyci-alerts.rb
         env:
           RUBYCI_ALERTS_SLACK_WEBHOOK_URL: ${{ secrets.RUBYCI_ALERTS_SLACK_WEBHOOK_URL }}
+          # SIMPLER_ALERTS_WEBHOOK_URL: ${{ secrets.SIMPLER_ALERTS_WEBHOOK_URL }}
 
       - name: Update the timestamp file
         run: |

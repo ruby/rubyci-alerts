@@ -10,6 +10,19 @@ RUBYCI_SERVERS_URL = "https://rubyci.org/servers.json"
 RUBYCI_REPORTS_URL = "https://rubyci.org/reports.json"
 TIMESTAMPS_JSON = File.join(__dir__, "timestamps.json")
 
+FailureReport = Struct.new(
+  :name,
+  :commit,
+  :fail_uri,
+  :shortsummary,
+  keyword_init: true
+) do
+  def msg
+    commit_link = " (<https://github.com/ruby/ruby/commit/#{ commit }|#{ commit }>)" if commit
+    "#{ name }#{ commit_link }: <#{ fail_uri }|#{ shortsummary }>"
+  end
+end
+
 def shortsummary(summary)
   summary[/^[^\x28]+(?:\s*\([^\x29]*\)|\s*\[[^\x5D]*\])*\s*(\S.*?) \(/, 1]
 end
@@ -75,19 +88,23 @@ def get_failure_reports(servers)
     fail_uri = File.join(fail_uri, "ruby-master", fail_path)
 
     unless shortsummary.include?("success")
-      commit = " (<https://github.com/ruby/ruby/commit/#{ commit }|#{ commit }>)" if commit
-      msg = "#{ name }#{ commit }: <#{ fail_uri }|#{ escape(shortsummary) }>"
-      failure_reports << [[ordinal, datetime, server_id.to_s], msg]
+      report = FailureReport.new(
+        name: name,
+        commit: commit,
+        fail_uri: fail_uri,
+        shortsummary: escape(shortsummary),
+      )
+      failure_reports << [[ordinal, datetime, server_id.to_s], report]
     end
   end
-  failure_reports.sort_by {|key, _msg| key }
+  failure_reports.sort_by {|key, _report| key }
 end
 
 def filter_failure_reports(failure_reports, timestamps)
-  failure_reports.reject! do |(_ordinal, datetime, server_id), _msg|
+  failure_reports.reject! do |(_ordinal, datetime, server_id), _report|
     timestamps[server_id] && datetime <= timestamps[server_id]
   end
-  failure_reports.each do |(_ordinal, datetime, server_id), _msg|
+  failure_reports.each do |(_ordinal, datetime, server_id), _report|
     timestamps[server_id] = [timestamps[server_id], datetime].compact.max
   end
 end
@@ -99,8 +116,8 @@ begin
   servers = get_servers
   failure_reports = get_failure_reports(servers)
   filter_failure_reports(failure_reports, timestamps)
-  failure_reports.each do |_key, msg|
-    notify_slack(msg)
+  failure_reports.each do |_key, report|
+    notify_slack(report.msg)
   end
 
   File.write(TIMESTAMPS_JSON, JSON.pretty_generate(timestamps))
