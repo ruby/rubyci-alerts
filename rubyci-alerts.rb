@@ -8,7 +8,7 @@ require "time"
 SLACK_WEBHOOK_URL = ENV["RUBYCI_ALERTS_SLACK_WEBHOOK_URL"]
 RUBYCI_SERVERS_URL = "https://rubyci.org/servers.json"
 RUBYCI_REPORTS_URL = "https://rubyci.org/reports.json"
-SIMPLER_ALERTS_URL = ENV["SIMPLER_ALERTS_SIMPLER_ALERTS_URL"]
+SIMPLER_ALERTS_URL = ENV["RUBYCI_ALERTS_SIMPLER_ALERTS_URL"]
 TIMESTAMPS_JSON = File.join(__dir__, "timestamps.json")
 
 FailureReport = Struct.new(
