@@ -137,7 +137,6 @@ begin
   failure_reports = get_failure_reports(servers)
   filter_failure_reports(failure_reports, timestamps)
   failure_reports.each do |_key, report|
-    notify_slack(report.msg)
     notify_simpler_alerts(report)
   end
 
