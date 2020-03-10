@@ -11,6 +11,11 @@ RUBYCI_REPORTS_URL = "https://rubyci.org/reports.json"
 SIMPLER_ALERTS_URL = ENV["RUBYCI_ALERTS_SIMPLER_ALERTS_URL"]
 TIMESTAMPS_JSON = File.join(__dir__, "timestamps.json")
 
+NOTIFY_CHANNELS = [
+  "C5FCXFXDZ", # alerts
+  "CR2QGFCAE", # alerts-emoji
+]
+
 FailureReport = Struct.new(
   :name,
   :commit,
@@ -32,8 +37,8 @@ def escape(s)
   s.gsub(/[&<>]/, "&" => "&amp;", "<" => "&lt;", ">" => "&gt;")
 end
 
-def notify_slack(msg)
-  params = { text: msg }
+def notify_slack(msg, channel:)
+  params = { text: msg, channel: channel }
   if SLACK_WEBHOOK_URL
     Net::HTTP.post(
       URI.parse(SLACK_WEBHOOK_URL),
@@ -141,6 +146,9 @@ begin
   end
 
   File.write(TIMESTAMPS_JSON, JSON.pretty_generate(timestamps))
-ensure
-  notify_slack("failed: #{ escape($!.message) }") if $!
+rescue => e
+  NOTIFY_CHANNELS.each do |channel|
+    notify_slack("ruby/rubyci-alerts failed: #{e.class}: #{ escape(e.message) }", channel: channel)
+  end
+  puts e.backtrace
 end
