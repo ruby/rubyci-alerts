@@ -72,7 +72,7 @@ end
 def fetch_json(url)
   count = 0
   begin
-    open(url) do |f|
+    URI.open(url) do |f|
       JSON.parse(f.read)
     end
   rescue Exception
