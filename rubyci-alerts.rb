@@ -100,6 +100,7 @@ def get_failure_reports(servers)
 
     server_id = report["server_id"]
     server = servers[server_id]
+    next if !server
     name = server["name"]
     uri = URI.parse(server["uri"])
     ordinal = server["ordinal"]
