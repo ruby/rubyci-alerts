@@ -110,7 +110,7 @@ def get_failure_reports(servers)
     commit = summary[/^(\h{10,}) /, 1]
     raw = report["ltsv"].split("\t").map {|s| s.split(":", 2) }.to_h
     fail_path = raw["compressed_failhtml_relpath"]
-    fail_uri = "https://rubyci.org/logs/#{ uri.host + uri.path }"
+    fail_uri = uri.to_s
     fail_uri = File.join(fail_uri, "ruby-master", fail_path)
 
     unless shortsummary.include?("success")
