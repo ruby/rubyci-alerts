@@ -19,7 +19,6 @@ jobs:
       - name: Setup the environment
         run: |
           sudo snap install chromium
-          gem install bundler
           bundle install
 
       - name: Run the script
