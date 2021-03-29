@@ -12,14 +12,13 @@ jobs:
   latest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
-      - uses: actions/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
 
       - name: Setup the environment
         run: |
           sudo snap install chromium
-          gem install bundler
           bundle install
 
       - name: Run the script
