@@ -88,7 +88,7 @@ end
 def get_servers
   servers = {}
   fetch_json(RUBYCI_SERVERS_URL).each do |server|
-    servers[server["id"]] = server
+    servers[server["id"]] = server if server["name"] != "crossruby"
   end
   servers
 end
