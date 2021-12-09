@@ -109,9 +109,10 @@ def get_failure_reports(servers)
     shortsummary = shortsummary(summary)
     commit = summary[/^(\h{10,}) /, 1]
     raw = report["ltsv"].split("\t").map {|s| s.split(":", 2) }.to_h
+    depsuffixed_name = raw["depsuffixed_name"]
     fail_path = raw["compressed_failhtml_relpath"]
     fail_uri = uri.to_s
-    fail_uri = File.join(fail_uri, "ruby-master", fail_path)
+    fail_uri = File.join(fail_uri, depsuffixed_name, fail_path)
 
     unless shortsummary.include?("success")
       report = FailureReport.new(
