@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     childprocess (3.0.0)
-    rubyzip (2.0.0)
+    rubyzip (3.4.0)
     selenium-webdriver (3.142.6)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
