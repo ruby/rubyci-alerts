@@ -1,0 +1,20 @@
+[
+  {
+    "id": 40,
+    "name": "icc 2025.3 x64 (Ubuntu)",
+    "uri": "http://rubyci.s3.amazonaws.com/icc-x64/",
+    "created_at": "2015-03-26T04:15:50.556Z",
+    "updated_at": "2026-09-10T06:53:58.177Z",
+    "ordinal": 17.0,
+    "eol_date": "2029-04-30"
+  },
+  {
+    "id": 122,
+    "name": "macOS 14.8 Sonoma",
+    "uri": "http://rubyci.s3.amazonaws.com/osx1400arm/",
+    "created_at": "2024-10-30T03:19:22.970Z",
+    "updated_at": "2026-02-13T08:22:13.596Z",
+    "ordinal": 14.68,
+    "eol_date": null
+  }
+]

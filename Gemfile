@@ -1,3 +1,4 @@
 source "https://rubygems.org"
 
-gem "selenium-webdriver"
+gem "rake"
+gem "test-unit"
