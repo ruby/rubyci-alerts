@@ -136,21 +136,23 @@ def filter_failure_reports(failure_reports, timestamps)
   end
 end
 
-begin
-  timestamps = {}
-  timestamps = JSON.parse(File.read(TIMESTAMPS_JSON))
+if __FILE__ == $0
+  begin
+    timestamps = {}
+    timestamps = JSON.parse(File.read(TIMESTAMPS_JSON))
 
-  servers = get_servers
-  failure_reports = get_failure_reports(servers)
-  filter_failure_reports(failure_reports, timestamps)
-  failure_reports.each do |_key, report|
-    notify_simpler_alerts(report)
-  end
+    servers = get_servers
+    failure_reports = get_failure_reports(servers)
+    filter_failure_reports(failure_reports, timestamps)
+    failure_reports.each do |_key, report|
+      notify_simpler_alerts(report)
+    end
 
-  File.write(TIMESTAMPS_JSON, JSON.pretty_generate(timestamps))
-rescue => e
-  NOTIFY_CHANNELS.each do |channel|
-    notify_slack("ruby/rubyci-alerts failed: #{e.class}: #{ escape(e.message) }", channel: channel)
+    File.write(TIMESTAMPS_JSON, JSON.pretty_generate(timestamps))
+  rescue => e
+    NOTIFY_CHANNELS.each do |channel|
+      notify_slack("ruby/rubyci-alerts failed: #{e.class}: #{ escape(e.message) }", channel: channel)
+    end
+    puts e.backtrace
   end
-  puts e.backtrace
 end

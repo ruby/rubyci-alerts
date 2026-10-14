@@ -1,0 +1,50 @@
+[
+  {
+    "id": 4448056,
+    "server_id": 122,
+    "datetime": "2026-10-13T20:29:06.000Z",
+    "branch": "master",
+    "revision": "7ad8db2311523bc1af6a97154a65bb56758d8f7a",
+    "summary": "7ad8db23115 ruby (osx1400arm) 67W failed(dist) (diff:test-all,dist,success)",
+    "created_at": "2026-10-13T21:21:40.268Z",
+    "updated_at": "2026-10-13T21:21:40.268Z",
+    "option": null,
+    "ltsv": "host:osx1400arm\tdepsuffixed_name:ruby-master\tstart_time:20261013T202906Z\tresult:failure\ttitle:7ad8db23115 ruby (osx1400arm) 67W failed(dist)\tcompressed_loghtml_relpath:log/20261013T202906Z.log.html.gz\tcompressed_failhtml_relpath:log/20261013T202906Z.fail.html.gz\tcompressed_diffhtml_relpath:log/20261013T202906Z.diff.html.gz\tdifferent_sections:test-all,dist,success\tversion:7ad8db23115 ruby\tdep_versions:[]\thostname:(osx1400arm)\twarn:67W\tmark:\tstatus:\tfailure_dist:failed(dist)\thttps://github.com/ruby/ruby:7ad8db2311523bc1af6a97154a65bb56758d8f7a\truby_rev:7ad8db23115"
+  },
+  {
+    "id": 4448111,
+    "server_id": 122,
+    "datetime": "2026-10-13T21:45:04.000Z",
+    "branch": "master",
+    "revision": "67abedae69744b89fb477f96568a9363addfb469",
+    "summary": "67abedae697 ruby (osx1400arm) 3W success (diff:src,miniversion,version,test-all,rubyspec,dist)",
+    "created_at": "2026-10-13T22:51:22.807Z",
+    "updated_at": "2026-10-13T22:51:22.807Z",
+    "option": null,
+    "ltsv": "host:osx1400arm\tdepsuffixed_name:ruby-master\tstart_time:20261013T214504Z\tresult:success\ttitle:67abedae697 ruby (osx1400arm) 3W\tcompressed_loghtml_relpath:log/20261013T214504Z.log.html.gz\tcompressed_failhtml_relpath:log/20261013T214504Z.fail.html.gz\tcompressed_diffhtml_relpath:log/20261013T214504Z.diff.html.gz\tdifferent_sections:src,miniversion,version,test-all,rubyspec,dist\tversion:67abedae697 ruby\tdep_versions:[]\thostname:(osx1400arm)\twarn:3W\tmark:\tstatus:\thttps://github.com/ruby/ruby:67abedae69744b89fb477f96568a9363addfb469\truby_rev:67abedae697"
+  },
+  {
+    "id": 4448055,
+    "server_id": 122,
+    "datetime": "2026-10-13T20:29:06.000Z",
+    "branch": "3.3",
+    "revision": "7ad8db2311523bc1af6a97154a65bb56758d8f7a",
+    "summary": "7ad8db23115 ruby (osx1400arm) 67W failed(dist) (diff:test-all,dist,success)",
+    "created_at": "2026-10-13T21:21:40.268Z",
+    "updated_at": "2026-10-13T21:21:40.268Z",
+    "option": null,
+    "ltsv": "host:osx1400arm\tdepsuffixed_name:ruby-3.3\tstart_time:20261013T202906Z\tresult:failure\ttitle:7ad8db23115 ruby (osx1400arm) 67W failed(dist)\tcompressed_loghtml_relpath:log/20261013T202906Z.log.html.gz\tcompressed_failhtml_relpath:log/20261013T202906Z.fail.html.gz\tcompressed_diffhtml_relpath:log/20261013T202906Z.diff.html.gz\tdifferent_sections:test-all,dist,success\tversion:7ad8db23115 ruby\tdep_versions:[]\thostname:(osx1400arm)\twarn:67W\tmark:\tstatus:\tfailure_dist:failed(dist)\thttps://github.com/ruby/ruby:7ad8db2311523bc1af6a97154a65bb56758d8f7a\truby_rev:7ad8db23115"
+  },
+  {
+    "id": 4447990,
+    "server_id": 40,
+    "datetime": "2026-10-13T18:30:12.000Z",
+    "branch": "master",
+    "revision": "15212f6c1cf04e18c43ca44601f525a3bbf32b62",
+    "summary": "15212f6c1cf ruby (icc-x64) 12W failed(test-all) (diff:test-all)",
+    "created_at": "2026-10-13T19:20:41.000Z",
+    "updated_at": "2026-10-13T19:20:41.000Z",
+    "option": null,
+    "ltsv": "host:icc-x64\tdepsuffixed_name:ruby-master\tstart_time:20261013T183012Z\tresult:failure\ttitle:15212f6c1cf ruby (icc-x64) 12W failed(test-all)\tcompressed_loghtml_relpath:log/20261013T183012Z.log.html.gz\tcompressed_failhtml_relpath:log/20261013T183012Z.fail.html.gz\tcompressed_diffhtml_relpath:log/20261013T183012Z.diff.html.gz\tdifferent_sections:test-all\tversion:15212f6c1cf ruby\tdep_versions:[]\thostname:(icc-x64)\twarn:12W\tmark:\tstatus:\tfailure_test-all:failed(test-all)\thttps://github.com/ruby/ruby:15212f6c1cf04e18c43ca44601f525a3bbf32b62\truby_rev:15212f6c1cf"
+  }
+]
